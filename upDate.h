@@ -21,6 +21,14 @@ class upDate
         int getMonth();//gets month in integer form
         int getDay();//returns day
         int getYear();//returns year
+        
+        void display();//display date in format (month, day, year) no endl after
+        void increaseDate( int N );//increment date by n days
+        void decreaseDate( int N );//decrement date by n days
+        int daysBetween( upDate D );// return number of day between this date and date D. D - this date
+        int dayOfYear();
+        string dayName();//reutrn monday, tuesday
+        
         string getMonthName();//return name of the month
         int julian( );
         static int GetDateCount();
@@ -37,6 +45,11 @@ class upDate
             return *this;
         }//to make d1 = d2 work
         
+        friend upDate operator-( int num, upDate &obj  )
+        {
+            
+            return upDate( obj.julian() - num );
+        }
         
         upDate operator-( int num )
         {
@@ -47,7 +60,7 @@ class upDate
         friend upDate operator+( int num, upDate &obj  )
         {
             
-            return upDate( obj.ptr[0], obj.ptr[1] + num, obj.ptr[2]);
+            return upDate( obj.julian() + num );
         }
         
         upDate operator+( int num )
@@ -67,21 +80,25 @@ class upDate
         //friend ostream &operator >>( ostream &i, upDate &d );
         upDate operator++( int i )
         {
-            return upDate( (*this).julian() + 1 );
+            *this = upDate( (*this).julian() + 1 );
+            return *this;
         }//post incre dummy para
         
         upDate operator++()
         {
-            return upDate( (*this).julian() + 1 );
+            *this = upDate( (*this).julian() + 1 );
+            return *this;
         };//pre incre
         
         upDate operator--( int i )
         {
-            return upDate( (*this).julian() - 1 );
+            *this = upDate( (*this).julian() - 1 );
+            return *this;
         };//post decre dummy para
         upDate operator--()
         {
-            return upDate( (*this).julian() - 1 );
+            *this = upDate( (*this).julian() - 1 );
+            return *this;
         };//pre decr
         
         
@@ -95,37 +112,30 @@ class upDate
             return upDate( (*this).julian() - num );
         }
         
-        void operator==( const upDate& obj )
+        bool operator==( const upDate& obj )
         {
-            bool equal = ( (this->ptr[0] == obj.ptr[0] ) && (this->ptr[1] == obj.ptr[1] ) && (this->ptr[1] == obj.ptr[1] ) );
-            if ( equal == 0 )
-            {
-                cout<<"false"<<endl;
-            }
-            else
-            {
-                cout<<"true"<<endl;
-            }
+            return ( (this->ptr[0] == obj.ptr[0] ) && (this->ptr[1] == obj.ptr[1] ) && (this->ptr[1] == obj.ptr[1] ) );
         }
         
-        void operator<( const upDate& obj )
+        bool operator<( const upDate& obj )
         {
             //true if less than
             int year = this->ptr[0] - obj.ptr[0];
-            int month = this->ptr[0] - obj.ptr[0];
-            int day = this->ptr[0] - obj.ptr[0];
+            int month = this->ptr[1] - obj.ptr[1];
+            int day = this->ptr[2] - obj.ptr[2];
+
             
             if ( year < 0 || ( year == 0 && month < 0 ) || ( year == 0 && month == 0 && day < 0 ))//year 
             {
-                cout<<"true"<<endl;
+                return true;
             }
             else
             {
-                cout<<"false"<<endl;
+                return false;
             }
         }
         
-        void operator>( const upDate& obj )
+        bool operator>( const upDate& obj )
         {
             //true if greater than
             int year = this->ptr[0] - obj.ptr[0];
@@ -134,30 +144,14 @@ class upDate
             
             if ( year > 0 || ( year == 0 && month > 0 ) || ( year == 0 && month == 0 && day > 0 ))//year 
             {
-                cout<<"true"<<endl;
+                return true;
             }
             else
             {
-                cout<<"false"<<endl;
+                return false;
             }
         }
         
-        
-
-
-        
-    /*
-    TODOS:
-    Add a copy constructor
-    Add a = operator
-    Add a == operaator
-    Add a - operaator
-    Add a + operaator
-    Add a > operaator
-    Add a < operaator
-    
-
-    */
     
 };
 #endif

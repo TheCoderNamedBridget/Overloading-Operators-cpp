@@ -74,10 +74,16 @@ upDate::upDate( int J )
 
 upDate::upDate( const upDate& d)
 {
-    ptr = new int[3];
+    if ( ptr == NULL)
+    {
+        ptr = new int[3];
+        count++;
+    }
+    
     ptr[0] = d.ptr[0];
     ptr[1] = d.ptr[1];
     ptr[2] = d.ptr[2];
+    
 
 //assign values of date pointer into new stuff    
 }//copy constructor
@@ -90,77 +96,84 @@ upDate::~upDate()
     
 }
 
-// void upDate::setDate( int m, int d, int y )
-// {
-    
-// }
+int upDate::GetDateCount()
+{
+    return count;
+}
 
-// int upDate::getMonth()
-// {
-//     return ptr[0];
-// }
+void upDate::setDate( int m, int d, int y )
+{
+    ptr[0] = m;
+    ptr[1] = d;
+    ptr[2] = y;
+}
 
-// int upDate::getDay()
-// {
-//     return ptr[1];
-// }
+int upDate::getMonth()
+{
+    return ptr[0];
+}
 
-// int upDate::getYear()
-// {
-//     return ptr[2];
-// }
+int upDate::getDay()
+{
+    return ptr[1];
+}
 
-// string upDate::getMonthName()
-// {
-//     string m;
-//     int month = ptr[0];
-//     if ( month == 1 )
-//     {
-//         m = "January";
-//     }
-//     else if ( month == 2 )
-//     {
-//         m = "February";
-//     }
-//     else if ( month == 3 )
-//     {
-//         m = "March";
-//     }
-//     else if ( month == 4 )
-//     {
-//         m = "April";
-//     }
-//     else if ( month == 5 )
-//     {
-//         m = "May";
-//     }
-//     else if ( month == 6 )
-//     {
-//         m = "June";
-//     }
-//     else if ( month == 7 )
-//     {
-//         m = "July";
-//     }
-//     else if ( month == 8 )
-//     {
-//         m = "August";
-//     }
-//     else if ( month == 9 )
-//     {
-//         m = "September";
-//     }
-//     else if ( month == 10 )
-//     {
-//         m = "October";
-//     }
-//     else if ( month == 11 )
-//     {
-//         m = "November";
-//     }
-//     else if ( month == 12 )
-//     {
-//         m = "December";
-//     }
-//     return m;
-// }
+int upDate::getYear()
+{
+    return ptr[2];
+}
+
+string upDate::getMonthName()
+{
+    string m;
+    int month = ptr[0];
+    if ( month == 1 )
+    {
+        m = "January";
+    }
+    else if ( month == 2 )
+    {
+        m = "February";
+    }
+    else if ( month == 3 )
+    {
+        m = "March";
+    }
+    else if ( month == 4 )
+    {
+        m = "April";
+    }
+    else if ( month == 5 )
+    {
+        m = "May";
+    }
+    else if ( month == 6 )
+    {
+        m = "June";
+    }
+    else if ( month == 7 )
+    {
+        m = "July";
+    }
+    else if ( month == 8 )
+    {
+        m = "August";
+    }
+    else if ( month == 9 )
+    {
+        m = "September";
+    }
+    else if ( month == 10 )
+    {
+        m = "October";
+    }
+    else if ( month == 11 )
+    {
+        m = "November";
+    }
+    else if ( month == 12 )
+    {
+        m = "December";
+    }
+    return m;
+}

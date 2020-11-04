@@ -1,157 +1,79 @@
 
-#ifndef UPDATE_H
-#define UPDATE_H
+/*
+Bridget Naylor
+Date:10/21/2020
+Class: CECS 282 Section 04
+Honesty statement:
+I certify that this program is my own original work. I did not copy any part of this program from
+any other source. I further certify that I typed each and every line of code in this program.
+*/
+#include <stdio.h>
+#include "upDate.h"
 #include <iostream>
 using namespace std;
 
-class upDate
-{
-    private:
-        int *ptr = NULL;
-        
-    public:
-        static int count;//everytim new object is created add +1 to count
-        upDate();//default constructor set to May, 11, 1959
-        
-        upDate( int M, int D, int Y);//overloaded constructor
-        upDate( int J );//overloaded constructor takes in Julian date and converts to regular date, if is not valid date then sets to default
-        upDate( const upDate& d);//copy constructor
-        ~upDate();//deallocate any memory that was allocated in consttructor
-        void setDate( int M, int D, int Y);//sets date to parameters
-        int getMonth();//gets month in integer form
-        int getDay();//returns day
-        int getYear();//returns year
-        
-        void display();//display date in format (month, day, year) no endl after
-        void increaseDate( int N );//increment date by n days
-        void decreaseDate( int N );//decrement date by n days
-        int daysBetween( upDate D );// return number of day between this date and date D. D - this date
-        int dayOfYear();
-        string dayName();//reutrn monday, tuesday
-        
-        string getMonthName();//return name of the month
-        int julian( );
-        static int GetDateCount();
-        upDate operator=( const upDate&obj )
-        {
-            //delete[] ptr;
-            // ptr = new int[3];
-            // ptr[0] = obj.ptr[0];
-            // ptr[0] = obj.ptr[1];
-            // ptr[0] = obj.ptr[2];
-            this->ptr[0] = obj.ptr[0];
-            this->ptr[1] = obj.ptr[1];
-            this->ptr[2] = obj.ptr[2];
-            return *this;
-        }//to make d1 = d2 work
-        
-        friend upDate operator-( int num, upDate &obj  )
-        {
-            
-            return upDate( obj.julian() - num );
-        }
-        
-        upDate operator-( int num )
-        {
-            
-            return upDate( (*this).julian() - num );
-        }
-        
-        friend upDate operator+( int num, upDate &obj  )
-        {
-            
-            return upDate( obj.julian() + num );
-        }
-        
-        upDate operator+( int num )
-        {
-            return upDate( (*this).julian() + num );
-        }
-        
-        friend int operator-( upDate &obj1, upDate &obj2 ){ 
-            
-            return (obj1.julian() - obj2.julian());     
-        }
-        
-        friend ostream &operator<<( ostream &output, const upDate &up ){ 
-            output<<up.ptr[0]<<"/"<< up.ptr[1]<<"/"<< up.ptr[2]<<endl;
-            //return output + " / ";            
-        }
-        //friend ostream &operator >>( ostream &i, upDate &d );
-        upDate operator++( int i )
-        {
-            *this = upDate( (*this).julian() + 1 );
-            return *this;
-        }//post incre dummy para
-        
-        upDate operator++()
-        {
-            *this = upDate( (*this).julian() + 1 );
-            return *this;
-        };//pre incre
-        
-        upDate operator--( int i )
-        {
-            *this = upDate( (*this).julian() - 1 );
-            return *this;
-        };//post decre dummy para
-        upDate operator--()
-        {
-            *this = upDate( (*this).julian() - 1 );
-            return *this;
-        };//pre decr
-        
-        
-        upDate operator+=( const int& num )
-        {
-            return upDate( (*this).julian() + num );
-        }
-        
-        upDate operator-=( const int& num )
-        {
-            return upDate( (*this).julian() - num );
-        }
-        
-        bool operator==( const upDate& obj )
-        {
-            return ( (this->ptr[0] == obj.ptr[0] ) && (this->ptr[1] == obj.ptr[1] ) && (this->ptr[1] == obj.ptr[1] ) );
-        }
-        
-        bool operator<( const upDate& obj )
-        {
-            //true if less than
-            int year = this->ptr[0] - obj.ptr[0];
-            int month = this->ptr[1] - obj.ptr[1];
-            int day = this->ptr[2] - obj.ptr[2];
 
-            
-            if ( year < 0 || ( year == 0 && month < 0 ) || ( year == 0 && month == 0 && day < 0 ))//year 
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        
-        bool operator>( const upDate& obj )
-        {
-            //true if greater than
-            int year = this->ptr[0] - obj.ptr[0];
-            int month = this->ptr[0] - obj.ptr[0];
-            int day = this->ptr[0] - obj.ptr[0];
-            
-            if ( year > 0 || ( year == 0 && month > 0 ) || ( year == 0 && month == 0 && day > 0 ))//year 
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        
+
+int upDate::count = 0;
+int main()
+{
     
-};
-#endif
+    upDate Bday;
+	upDate duedate(11,4,2020);
+	upDate today(duedate);
+
+
+	cout << endl;
+	cout << "Today is " << today << endl;
+	cout << "This program is due on " << duedate;
+	cout << endl;
+
+	cout << "(3)Right now there are "<<upDate::GetDateCount() << " upDate objects\n";
+	{
+		upDate d1, d2, d3;
+		cout << "(6)Inside this block there are "<<upDate::GetDateCount() << " upDate objects\n";
+	}
+	cout << "(3)Outside the block there are "<<upDate::GetDateCount() << " upDate objects\n";
+
+	upDate dtemp(duedate);
+	dtemp++;
+	cout << "If you turn this assignment in on "<<dtemp<<" then is will be late.\n";
+	cout << "It is due on "<<--dtemp<<" so don't be late.\n";
+	cout << "One week from due date is "<<duedate+7<<endl;
+     cout << "One week from due date is "<<7+duedate<<endl;
+	cout << "One week earlier from due date is "<<duedate-7<<endl;
+
+	cout << "Your professor was born on "<<Bday<<" : ";
+	cout << "Master Gold is "<< duedate - Bday << " days old today\n";
+	
+	cout << "Today is Julian date "<<duedate.julian()<<endl;;
+	cout << "Tomorrrow is Julian date "<<(++duedate).julian()<<endl;;
+
+	cout << "The very first Julian date was " << upDate(11,5,2018)-upDate(11,5,2018).julian()<<endl;
+
+	cout << "The very first Julian date was " << today - today.julian()<<endl;
+
+
+	upDate yesterday, tomorrow;
+	yesterday = today-1;
+	tomorrow = today+1;
+	
+	cout << "Yesterday was "<<yesterday << endl;
+	cout << "Today is "<<today<<endl;
+	cout << "Tomorrow is "<<tomorrow<<endl;
+
+	cout << "Today is ";
+	cout << ((today>tomorrow)?"greater than":"not greater than");
+	cout << " than tomorrow\n";
+
+	cout << "Today is ";
+	cout << ((today<tomorrow)?"less than":"not less than");
+	cout << " than tomorrow\n";
+
+	cout << "Today is ";
+	cout << ((today==tomorrow)?"equal to":"not equal to");
+	cout << " tomorrow\n";
+
+	getchar();
+	return 0;
+}
